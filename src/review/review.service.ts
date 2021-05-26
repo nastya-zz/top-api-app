@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
+import { ModelType, DocumentType, BeAnObject } from '@typegoose/typegoose/lib/types';
 import { Types } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -21,7 +21,7 @@ export class ReviewService {
 		return this.reviewModel.find({ productId: Types.ObjectId(productId) }).exec();
 	}
 
-	async deleteByProductId(productId: string) {
+	async deleteByProductId(productId: string): Promise<BeAnObject> {
 		return this.reviewModel.deleteMany({ productId: Types.ObjectId(productId) }).exec();
 	}
 }
