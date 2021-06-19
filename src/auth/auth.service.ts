@@ -5,6 +5,7 @@ import { UserModel } from './user.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { genSaltSync, hashSync, compare } from 'bcryptjs';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
+import { JwtService } from '@nestjs/jwt';
 
 
 
@@ -12,7 +13,8 @@ import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
 export class AuthService {
 
 	constructor(
-		@InjectModel(UserModel) private readonly userModel: ModelType<UserModel>
+		@InjectModel(UserModel) private readonly userModel: ModelType<UserModel>,
+		private readonly jwtService: JwtService
 	) { }
 
 	async createUser(dto: AuthDto) {
@@ -29,7 +31,7 @@ export class AuthService {
 		return this.userModel.findOne({ email }).exec();
 	}
 
-	async validateUser(dto: AuthDto) {
+	async validateUser(dto: AuthDto): Promise<Pick<UserModel, 'email'>> {
 		const user = await this.findUser(dto.login);
 		if (!user) {
 			throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
@@ -41,5 +43,13 @@ export class AuthService {
 		}
 
 		return { email: user.email };
+	}
+
+	async login(email: string) {
+		const payload = { email };
+
+		return {
+			access_token: await this.jwtService.signAsync(payload)
+		};
 	}
 }
