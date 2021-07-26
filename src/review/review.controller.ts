@@ -11,6 +11,7 @@ import {
 	UsePipes,
 	ValidationPipe
 } from '@nestjs/common';
+import { IdValidationPipe } from 'src/pipes/ad-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { UserEmail } from '../decorators/user-email.decorator';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -22,6 +23,7 @@ export class ReviewController {
 	constructor(private readonly reviewService: ReviewService) { }
 
 
+	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Post('create')
 	async create(@Body() dto: CreateReviewDto) {
@@ -30,7 +32,7 @@ export class ReviewController {
 
 	@UseGuards(JwtAuthGuard)
 	@Delete(':id')
-	async delete(@Param('id') id: string) {
+	async delete(@Param('id', IdValidationPipe) id: string) {
 		const deletedDoc = await this.reviewService.delete(id);
 		if (!deletedDoc) {
 			throw new HttpException(REVIEW_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -38,14 +40,14 @@ export class ReviewController {
 		return deletedDoc;
 	}
 
-	// @UseGuards(JwtAuthGuard)
 	@Get('byProduct/:productId')
-	async getByProducId(@Param('productId') productId: string) {
+	async getByProducId(@Param('productId', IdValidationPipe) productId: string) {
 		return this.reviewService.findProductId(productId);
 	}
 
-	// @Delete('byProduct/:productId')
-	// async deleteByProductId(@Param('productId') productId: string) {
-	// 	return this.reviewService.deleteByProductId(productId);
-	// }
+	@UseGuards(JwtAuthGuard)
+	@Delete('byProduct/:productId')
+	async deleteByProductId(@Param('productId') productId: string) {
+		return this.reviewService.deleteByProductId(productId);
+	}
 }
