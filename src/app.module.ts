@@ -7,9 +7,12 @@ import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { TopPageModule } from './top-page/top-page.module';
 
+const ENV = process.env.NODE_ENV;
 @Module({
 	imports: [
-		ConfigModule.forRoot(),
+		ConfigModule.forRoot({
+			envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+		}),
 		TypegooseModule.forRootAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],

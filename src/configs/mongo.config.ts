@@ -10,6 +10,7 @@ enum MongoEnv {
 }
 
 export const getMongoConfig = async (configService: ConfigService): Promise<TypegooseModuleOptions> => {
+	console.log('connecting string', getMongoConnectString(configService));
 	return Promise.resolve({
 		uri: getMongoConnectString(configService),
 		...getMongoOptions()
