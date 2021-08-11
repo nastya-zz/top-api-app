@@ -7,6 +7,7 @@ import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { TopPageModule } from './top-page/top-page.module';
 import { FilesModule } from './files/files.module';
+import { SitemapModule } from './sitemap/sitemap.module';
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -23,7 +24,8 @@ const ENV = process.env.NODE_ENV;
 		ProductModule,
 		TopPageModule,
 		ReviewModule,
-		FilesModule
+		FilesModule,
+		SitemapModule
 	],
 })
 export class AppModule { }
