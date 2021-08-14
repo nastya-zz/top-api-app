@@ -43,6 +43,12 @@ export class TopPageController {
 		return page;
 	}
 
+	@Get()
+	async getAll() {
+		const pages: TopPageModel[] = await this.topPageService.findAll();
+		return pages;
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Delete(':id')
 	async delete(@Param('id', IdValidationPipe) id: string) {
