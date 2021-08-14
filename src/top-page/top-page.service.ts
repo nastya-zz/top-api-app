@@ -13,16 +13,20 @@ export class TopPageService {
 		return this.topPageModel.create(dto);
 	}
 
-	async findById(id: string): Promise<DocumentType<TopPageModel> | null> {
-		return this.topPageModel.findById(id).exec();
-	}
-
 	async deleteById(id: string): Promise<DocumentType<TopPageModel> | null> {
 		return this.topPageModel.findByIdAndDelete(id).exec();
 	}
 
 	async updateById(id: string, dto: TopPageDto) {
 		return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+	}
+
+	async findAll() {
+		return this.topPageModel.find({}).exec();
+	}
+
+	async findById(id: string): Promise<DocumentType<TopPageModel> | null> {
+		return this.topPageModel.findById(id).exec();
 	}
 
 	async findByCategory(dto: FindTopPageDto): Promise<DocumentType<TopPageModel[]> | []> {
