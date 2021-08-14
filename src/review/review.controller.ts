@@ -34,7 +34,6 @@ export class ReviewController {
 		return this.reviewService.create(dto);
 	}
 
-	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Post('notify')
 	async notify(@Body() dto: CreateReviewDto) {

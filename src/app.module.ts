@@ -9,6 +9,7 @@ import { TopPageModule } from './top-page/top-page.module';
 import { FilesModule } from './files/files.module';
 import { SitemapModule } from './sitemap/sitemap.module';
 import { TelegramModule } from './telegram/telegram.module';
+import { getTelegramConfig } from './configs/telegram.config';
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -27,7 +28,11 @@ const ENV = process.env.NODE_ENV;
 		ReviewModule,
 		FilesModule,
 		SitemapModule,
-		TelegramModule
+		TelegramModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: getTelegramConfig
+		})
 	],
 })
 export class AppModule { }
