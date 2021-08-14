@@ -33,6 +33,7 @@
 		"bcryptjs": "^2.4.3",
 		"class-transformer": "^0.4.0",
 		"class-validator": "^0.13.1",
+		"date-fns": "^2.23.0",
 		"fs-extra": "^10.0.0",
 		"mongoose": "5.10.18",
 		"nestjs-typegoose": "^7.1.38",
@@ -42,8 +43,8 @@
 		"rimraf": "^3.0.2",
 		"rxjs": "^6.6.6",
 		"sharp": "^0.28.3",
-		"xml2js": "^0.4.23",
-		"date-fns": "^2.23.0"
+		"telegraf": "^4.4.1",
+		"xml2js": "^0.4.23"
 	},
 	"devDependencies": {
 		"@nestjs/cli": "^7.6.0",

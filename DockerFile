@@ -1,9 +1,8 @@
 FROM node:14-alpine
 WORKDIR /opt/app
-# ADD package.json package.json 
+ADD package.json package.json 
 ADD . .
 RUN rm -rf ./node_modules
-RUN echo ls
 RUN npm cache clean --force
 RUN npm install 
 RUN npm install --arch=x64 --platform=linux --target=8.10.0 sharp
